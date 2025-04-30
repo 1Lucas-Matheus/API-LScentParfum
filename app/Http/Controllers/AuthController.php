@@ -13,7 +13,7 @@ class AuthController extends Controller
     public function login(Request $request)
     {
         $credentials = $request->only('email', 'password');
-        
+
         if (Auth::attempt($credentials)) {
             $user = Auth::user();
             return response()->json([
@@ -27,6 +27,13 @@ class AuthController extends Controller
 
     public function register(Request $request)
     {
+        $request->merge([
+            'name' => trim($request->name),
+            'email' => trim($request->email),
+            'password' => trim($request->password),
+            'password_confirmation' => trim($request->password_confirmation),
+        ]);
+
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
@@ -58,4 +65,3 @@ class AuthController extends Controller
         return response()->json(['message' => 'Successfully logged out']);
     }
 }
-
