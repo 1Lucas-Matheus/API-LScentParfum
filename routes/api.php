@@ -1,7 +1,5 @@
 <?php
 
-namespace App\Http\Controllers;
-
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
@@ -18,11 +16,9 @@ Route::middleware('auth')->get('/user', function (Request $request) {
     return response()->json($request->user());
 });
 
-Route::middleware('auth:sanctum')->group(function () {
-    
+//Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('categorias', CategoriaController::class);
     Route::apiResource('perfumes', PerfumeController::class);
     Route::apiResource('cupons', CupomController::class);
     Route::apiResource('lembretes', LembreteController::class);
-
-});
+//});

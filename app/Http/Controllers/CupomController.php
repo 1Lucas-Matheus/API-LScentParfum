@@ -29,7 +29,7 @@ class CupomController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'key' => ['required', 'string', 'size:12', 'unique:cupons,key'],
+            'key' => ['required', 'string', 'size:12', 'unique:coupons,key'],
             'value' => ['required', 'integer', 'min:1', 'max:100'],
         ]);
 
@@ -64,7 +64,7 @@ class CupomController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'key' => ['required', 'string', 'size:12', 'unique:cupons,key,' . $id],
+            'key' => ['required', 'string', 'size:12', 'unique:coupons,key,' . $id],
             'value' => ['required', 'integer', 'min:1', 'max:100'],
         ]);
 

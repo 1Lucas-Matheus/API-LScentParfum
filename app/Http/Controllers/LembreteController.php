@@ -38,7 +38,7 @@ class LembreteController extends Controller
         ]);
 
         // Converting date to Y-m-d format for consistency
-        $dateConvert = Carbon::createFromFormat('d/m/Y', $request->date)->format('Y-m-d');
+        $dateConvert = Carbon::createFromFormat('d/m/Y', $request->date)->format('d/m/Y');
         $request->merge(['date' => $dateConvert]);
 
         $reminder = $this->reminders->create([
@@ -83,7 +83,8 @@ class LembreteController extends Controller
         ]);
 
         // Converting date to Y-m-d format for consistency
-        $dateConvert = Carbon::createFromFormat('d/m/Y', $request->date)->format('Y-m-d');
+        $dateConvert = Carbon::createFromFormat('d/m/Y', trim($request->date))->format('Y-m-d');
+
         $request->merge(['date' => $dateConvert]);
 
         $reminder->update($request->only(['reminder', 'date']));

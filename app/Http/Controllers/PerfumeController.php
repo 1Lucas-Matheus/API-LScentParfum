@@ -35,8 +35,8 @@ class PerfumeController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => ['required', 'string', 'max:255', 'unique:perfumes,name'],
-            'category_id' => ['required', 'integer', 'exists:categorias,id'],
+            'name' => ['required', 'string', 'max:255', 'unique:products,name'],
+            'category_id' => ['required', 'integer', 'exists:categories,id'],
             'price' => ['required', 'numeric', 'between:0,9999.99'],
             'promo' => ['nullable', 'numeric', 'between:0,100'],
             'quantity' => ['required', 'integer'],
@@ -76,8 +76,8 @@ class PerfumeController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'name' => ['required', 'string', 'max:255', 'unique:perfumes,name,' . $id],
-            'category_id' => ['required', 'integer', 'exists:categorias,id'],
+            'name' => ['required', 'string', 'max:255', 'unique:products,name,' . $id],
+            'category_id' => ['required', 'integer', 'exists:categories,id'],
             'price' => ['required', 'numeric', 'between:0,9999.99'],
             'promo' => ['nullable', 'numeric', 'between:0,100'],
             'quantity' => ['required', 'integer'],

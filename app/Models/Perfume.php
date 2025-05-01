@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Perfume extends Model
 {
+    protected $table = 'products';
     public function category()
     {
         return $this->belongsTo(Categoria::class, 'category_id');
