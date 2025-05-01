@@ -6,5 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Cupom extends Model
 {
-    //
+    protected $fillable = [
+        'value',
+        'key'
+    ];
 }
