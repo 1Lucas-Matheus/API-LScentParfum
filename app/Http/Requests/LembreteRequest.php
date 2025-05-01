@@ -6,23 +6,24 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class LembreteRequest extends FormRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
-     */
     public function rules(): array
     {
+        if ($this->isMethod('post')) {
+            return [
+                'reminder' => 'required|string|max:255',
+                'date' => 'required|date|after_or_equal:today',
+            ];
+        }
+
         return [
-            //
+            'reminder' => 'sometimes|required|string|max:255',
+            'date' => 'sometimes|required|date|after_or_equal:today',
         ];
     }
 }
+

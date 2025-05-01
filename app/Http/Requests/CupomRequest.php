@@ -6,23 +6,25 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class CupomRequest extends FormRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
-     */
     public function rules(): array
     {
+        $cupomId = $this->route('cupom');
+
+        if ($this->isMethod('post')) {
+            return [
+                'key' => 'required|string|max:12|unique:coupons,key',
+                'value' => 'required|integer|unique:coupons,value',
+            ];
+        }
+
         return [
-            //
+            'key' => 'sometimes|required|string|max:12|unique:coupons,key,' . $cupomId,
+            'value' => 'sometimes|required|integer|unique:coupons,value,' . $cupomId,
         ];
     }
 }
