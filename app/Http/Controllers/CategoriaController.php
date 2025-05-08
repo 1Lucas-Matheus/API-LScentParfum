@@ -87,35 +87,39 @@ class CategoriaController extends Controller
     /**
      * Update the specified category.
      */
-    public function update(Request $request, $id)
-    {
-        $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-        ]);
+    public function update(Request $request, Categoria $categoria)
+{
+    $request->validate([
+        'name' => ['required', 'string', 'max:255'],
+    ]);
 
-        $exists = $this->categories->where('name', $request->name)->where('id', '!=', $id)->exists();
+    $categoriaExistente = Categoria::where('name', $request->name)
+        ->where('id', '!=', $categoria->id)
+        ->exists();
 
-        if ($exists) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Já existe outra categoria com esse nome.'
-            ], 400);
-        }
-
-        $update = $this->categories->where('id', $id)->update($request->except(['_token', '_method']));
-
-        if ($update) {
-            return response()->json([
-                'success' => true,
-                'message' => 'A categoria foi atualizada com êxito.'
-            ], 200);
-        } else {
-            return response()->json([
-                'success' => false,
-                'message' => 'Não foi possível atualizar a categoria.'
-            ], 500);
-        }
+    if ($categoriaExistente) {
+        return response()->json([
+            'success' => false,
+            'message' => 'Já existe outra categoria com esse nome.'
+        ], 400);
     }
+
+    $categoria->name = $request->name;
+    $updated = $categoria->save();
+
+    if ($updated) {
+        return response()->json([
+            'success' => true,
+            'message' => 'A categoria foi atualizada com êxito.'
+        ], 200);
+    } else {
+        return response()->json([
+            'success' => false,
+            'message' => 'Não foi possível atualizar a categoria.'
+        ], 500);
+    }
+}
+
 
     /**
      * Remove the specified category.

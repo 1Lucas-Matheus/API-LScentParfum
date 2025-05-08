@@ -92,7 +92,7 @@ class PerfumeController extends Controller
         $product->update([
             'name' => $request->name,
             'price' => $request->price,
-            'category_id' => $request->category_id,
+            'category_id' => $request->category_id, 
             'quantity' => $request->quantity,
             'promo' => $request->promo ?? 0,
         ]);
