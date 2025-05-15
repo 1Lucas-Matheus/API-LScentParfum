@@ -2,41 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
 use Illuminate\Http\Request;
+use App\Models\User;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
+use Laravel\Sanctum\PersonalAccessToken;
+use Illuminate\Validation\ValidationException;
 
 class AuthController extends Controller
 {
-    public function login(Request $request)
-{
-    $credentials = $request->only('email', 'password');
-
-    if (Auth::attempt($credentials)) {
-        $user = Auth::user();
-        $token = $user->createToken('authToken')->plainTextToken;
-
-        return response()->json([
-            'message' => 'Login successful',
-            'user' => $user,
-            'token' => $token 
-        ], 200);
-    } else {
-        return response()->json(['message' => 'Unauthorized'], 401);
-    }
-}
-
-
     public function register(Request $request)
 {
-    $request->merge([
-        'name' => trim($request->name),
-        'email' => trim($request->email),
-        'password' => trim($request->password),
-        'password_confirmation' => trim($request->password_confirmation),
-    ]);
 
     $validator = Validator::make($request->all(), [
         'name' => 'required|string|max:255',
@@ -54,20 +31,47 @@ class AuthController extends Controller
         'password' => Hash::make($request->password),
     ]);
 
-    $token = $user->createToken('authToken')->plainTextToken;
+     $token = $user->createToken('API Token')->plainTextToken;
 
     return response()->json([
-        'message' => 'Registration successful',
-        'user' => $user,
-        'token' => $token
+        'message' => 'Usuário registrado com sucesso.',
+        'token' => $token,
     ], 201);
 }
 
 
+
+
+    public function login(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'email' => 'required|string|email',
+            'password' => 'required|string|min:8',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
+
+        if (Auth::attempt($request->only('email', 'password'))) {
+            $user = Auth::user();
+            $token = $user->createToken('API Token')->plainTextToken;
+
+            return response()->json([
+                'message' => 'Login bem-sucedido.',
+                'token' => $token,
+            ], 200);
+        }
+
+        return response()->json(['message' => 'Credenciais inválidas.'], 401);
+    }
+
     public function logout(Request $request)
     {
-        Auth::logout();
+        Auth::user()->tokens->each(function ($token) {
+            $token->delete();
+        });
 
-        return response()->json(['message' => 'Successfully logged out']);
+        return response()->json(['message' => 'Logout realizado com sucesso.'], 200);
     }
 }
