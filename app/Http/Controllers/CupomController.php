@@ -20,7 +20,11 @@ class CupomController extends Controller
     public function index()
     {
         $coupons = $this->coupons->all();
-        return response()->json($coupons);
+
+        return response()->json([
+            'success' => true,
+            'data' => $coupons
+        ], 200);
     }
 
     /**
@@ -49,13 +53,16 @@ class CupomController extends Controller
      */
     public function show($id)
     {
-        $coupon = $this->coupons->find($id);
+        $coupons = $this->coupons->find($id);
 
-        if (!$coupon) {
+        if (!$coupons) {
             return response()->json(['message' => 'Cupom não encontrado.'], 404);
         }
 
-        return response()->json($coupon);
+        return response()->json([
+            'success' => true,
+            'data' => $coupons
+        ], 200);
     }
 
     /**
