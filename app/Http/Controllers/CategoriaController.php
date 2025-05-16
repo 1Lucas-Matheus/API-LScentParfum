@@ -10,7 +10,7 @@ use App\Http\Controllers\Controller;
 class CategoriaController extends Controller
 {
     public readonly Categoria $categories;
-    
+
     public function __construct()
     {
         $this->categories = new Categoria();
