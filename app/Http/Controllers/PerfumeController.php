@@ -23,9 +23,14 @@ class PerfumeController extends Controller
         $products = $this->products->all();
         $categories = Categoria::all();
 
+        foreach ($products as $product) {
+            $category = $categories->firstWhere('id', $product->category_id);
+            $product->category = $category ? $category->name : "Sem categoria";
+        }
+
         return response()->json([
             'products' => $products,
-            'categories' => $categories
+            'categories' => $categories,
         ]);
     }
 
@@ -92,7 +97,7 @@ class PerfumeController extends Controller
         $product->update([
             'name' => $request->name,
             'price' => $request->price,
-            'category_id' => $request->category_id, 
+            'category_id' => $request->category_id,
             'quantity' => $request->quantity,
             'promo' => $request->promo ?? 0,
         ]);

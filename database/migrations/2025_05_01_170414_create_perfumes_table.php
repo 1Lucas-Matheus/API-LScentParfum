@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name')->unique();
             $table->integer('quantity');
-            $table->decimal('price', 6, 2);
+            $table->double('price', 6, 2);
             $table->unsignedBigInteger('category_id');
             $table->integer('promo')->nullable();
             $table->timestamps();
