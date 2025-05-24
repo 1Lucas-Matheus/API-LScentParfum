@@ -2,17 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Lembrete;
+use App\Models\Reminder;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
-class LembreteController extends Controller
+class ReminderController extends Controller
 {
-    public readonly Lembrete $reminders;
+    public readonly Reminder $reminders;
 
     public function __construct()
     {
-        $this->reminders = new Lembrete();
+        $this->reminders = new Reminder();
     }
 
     /**
@@ -23,7 +23,7 @@ class LembreteController extends Controller
         $reminders = $this->reminders->all();
 
         return response()->json([
-            'reminders' => $reminders
+            'data' => $reminders
         ]);
     }
 
@@ -34,16 +34,15 @@ class LembreteController extends Controller
     {
         $request->validate([
             'reminder' => ['required', 'string', 'max:255'],
-            'date' => ['required', 'date_format:d/m/Y'],
+            'dateTime' => ['required', 'date_format:d/m/Y'],
         ]);
 
-        // Converting date to Y-m-d format for consistency
-        $dateConvert = Carbon::createFromFormat('d/m/Y', $request->date)->format('d/m/Y');
-        $request->merge(['date' => $dateConvert]);
+        $dateTimeConvert = Carbon::createFromFormat('d/m/Y', $request->date)->format('d/m/Y');
+        $request->merge(['dateTime' => $dateTimeConvert]);
 
         $reminder = $this->reminders->create([
             'reminder' => $request->reminder,
-            'date' => $request->date
+            'dateTime' => $request->date
         ]);
 
         return response()->json([
@@ -53,23 +52,9 @@ class LembreteController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     */
-    public function show($id)
-    {
-        $reminder = $this->reminders->find($id);
-
-        if (!$reminder) {
-            return response()->json(['message' => 'Lembrete não encontrado.'], 404);
-        }
-
-        return response()->json($reminder);
-    }
-
-    /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Reminder $id)
     {
         $reminder = $this->reminders->find($id);
 
@@ -79,15 +64,14 @@ class LembreteController extends Controller
 
         $request->validate([
             'reminder' => ['required', 'string', 'max:255'],
-            'date' => ['required', 'date_format:d/m/Y'],
+            'dateTime' => ['required', 'date_format:d/m/Y'],
         ]);
 
-        // Converting date to Y-m-d format for consistency
-        $dateConvert = Carbon::createFromFormat('d/m/Y', trim($request->date))->format('Y-m-d');
+        $dateTimeConvert = Carbon::createFromFormat('d/m/Y', trim($request->date))->format('Y-m-d');
 
-        $request->merge(['date' => $dateConvert]);
+        $request->merge(['dateTime' => $dateTimeConvert]);
 
-        $reminder->update($request->only(['reminder', 'date']));
+        $reminder->update($request->only(['reminder', 'dateTime']));
 
         return response()->json([
             'message' => 'Lembrete atualizado com êxito.',
@@ -98,7 +82,7 @@ class LembreteController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy($id)
+    public function destroy(Reminder $id)
     {
         $reminder = $this->reminders->find($id);
 

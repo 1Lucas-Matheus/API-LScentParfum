@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Cupom extends Model
+class Coupom extends Model
 {
     protected $table = 'coupons';
     protected $fillable = [

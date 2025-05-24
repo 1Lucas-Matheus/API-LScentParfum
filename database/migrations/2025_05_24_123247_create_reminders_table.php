@@ -11,11 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('coupons', function (Blueprint $table) {
+        Schema::create('reminders', function (Blueprint $table) {
             $table->id();
-            $table->string('key', 12)->unique();
-            $table->integer('value')->unique();
-            $table->timestamps();
+            $table->string('reminder');
+            $table->date('dateTime');
+            $table->timestamps();;
         });
     }
 
@@ -24,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('coupons');
+        Schema::dropIfExists('reminders');
     }
 };

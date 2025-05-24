@@ -2,22 +2,21 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Categoria;
-use App\Models\Perfume;
+use App\Models\Category;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 
-class CategoriaController extends Controller
+class CategoryController extends Controller
 {
-    public readonly Categoria $categories;
+
+    public readonly Category $categories;
 
     public function __construct()
     {
-        $this->categories = new Categoria();
+        $this->categories = new Category();
     }
 
     /**
-     * Display a listing of the categories.
+     * Display a listing of the resource.
      */
     public function index()
     {
@@ -30,7 +29,7 @@ class CategoriaController extends Controller
     }
 
     /**
-     * Store a newly created category.
+     * Store a newly created resource in storage.
      */
     public function store(Request $request)
     {
@@ -65,77 +64,56 @@ class CategoriaController extends Controller
     }
 
     /**
-     * Show the form for editing the specified category.
+     * Update the specified resource in storage.
      */
-    public function show($id)
+    public function update(Request $request, Category $id)
     {
-        $category = $this->categories->find($id);
+        $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+        ]);
 
-        if (!$category) {
+        $categoriaExistente = Category::where('name', $request->name)
+            ->where('id', '!=', $id->id)
+            ->exists();
+
+        if ($categoriaExistente) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Já existe outra categoria com esse nome.'
+            ], 400);
+        }
+
+        $id->name = $request->name;
+        $updated = $id->save();
+
+        if ($updated) {
+            return response()->json([
+                'success' => true,
+                'message' => 'A categoria foi atualizada com êxito.'
+            ], 200);
+        } else {
+            return response()->json([
+                'success' => false,
+                'message' => 'Não foi possível atualizar a categoria.'
+            ], 500);
+        }
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(Category $id)
+    {
+        $id = $this->categories->find($id);
+
+        if (!$id) {
             return response()->json([
                 'success' => false,
                 'message' => 'Categoria não encontrada.'
             ], 404);
         }
 
-        return response()->json([
-            'success' => true,
-            'data' => $category
-        ], 200);
-    }
-
-    /**
-     * Update the specified category.
-     */
-    public function update(Request $request, Categoria $categoria)
-{
-    $request->validate([
-        'name' => ['required', 'string', 'max:255'],
-    ]);
-
-    $categoriaExistente = Categoria::where('name', $request->name)
-        ->where('id', '!=', $categoria->id)
-        ->exists();
-
-    if ($categoriaExistente) {
-        return response()->json([
-            'success' => false,
-            'message' => 'Já existe outra categoria com esse nome.'
-        ], 400);
-    }
-
-    $categoria->name = $request->name;
-    $updated = $categoria->save();
-
-    if ($updated) {
-        return response()->json([
-            'success' => true,
-            'message' => 'A categoria foi atualizada com êxito.'
-        ], 200);
-    } else {
-        return response()->json([
-            'success' => false,
-            'message' => 'Não foi possível atualizar a categoria.'
-        ], 500);
-    }
-}
-
-
-    /**
-     * Remove the specified category.
-     */
-    public function destroy($id)
-    {
-        $category = $this->categories->find($id);
-
-        if (!$category) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Categoria não encontrada.'
-            ], 404);
-        }
-
-        $Products = Perfume::where('category_id', $id)->exists();
+        $Products = Category::where('category_id', $id)->exists();
 
         if ($Products) {
             return response()->json([
@@ -144,7 +122,7 @@ class CategoriaController extends Controller
             ], 400);
         }
 
-        $destroy = $category->delete();
+        $destroy = $id->delete();
 
         if ($destroy) {
             return response()->json([

@@ -4,12 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Perfume extends Model
+class Product extends Model
 {
     protected $table = 'products';
+
     public function category()
     {
-        return $this->belongsTo(Categoria::class, 'category_id');
+        return $this->belongsTo(Category::class, 'category_id');
     }
 
     protected $fillable = [

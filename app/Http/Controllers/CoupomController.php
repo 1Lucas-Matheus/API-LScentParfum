@@ -2,16 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Cupom;
+use App\Models\Coupom;
 use Illuminate\Http\Request;
 
-class CupomController extends Controller
+class CoupomController extends Controller
 {
-    public readonly Cupom $coupons;
+    public readonly Coupom $coupons;
 
     public function __construct()
     {
-        $this->coupons = new Cupom();
+        $this->coupons = new Coupom();
     }
 
     /**
@@ -37,73 +37,56 @@ class CupomController extends Controller
             'value' => ['required', 'integer', 'min:1', 'max:100'],
         ]);
 
-        $coupon = $this->coupons->create([
+        $coupom = $this->coupons->create([
             'key' => $request->key,
             'value' => $request->value
         ]);
 
         return response()->json([
             'message' => 'Cupom criado com êxito.',
-            'coupon' => $coupon
+            'coupom' => $coupom
         ], 201);
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show($id)
-    {
-        $coupons = $this->coupons->find($id);
-
-        if (!$coupons) {
-            return response()->json(['message' => 'Cupom não encontrado.'], 404);
-        }
-
-        return response()->json([
-            'success' => true,
-            'data' => $coupons
-        ], 200);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Coupom $id)
     {
         $request->validate([
             'key' => ['required', 'string', 'size:12', 'unique:coupons,key,' . $id],
             'value' => ['required', 'integer', 'min:1', 'max:100'],
         ]);
 
-        $coupon = $this->coupons->find($id);
+        $coupom = $this->coupons->find($id);
 
-        if (!$coupon) {
+        if (!$coupom) {
             return response()->json(['message' => 'Cupom não encontrado.'], 404);
         }
 
-        $coupon->update([
+        $coupom->update([
             'key' => $request->key,
             'value' => $request->value
         ]);
 
         return response()->json([
             'message' => 'Cupom atualizado com êxito.',
-            'coupon' => $coupon
+            'coupom' => $coupom
         ]);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy($id)
+    public function destroy(Coupom $id)
     {
-        $coupon = $this->coupons->find($id);
+        $coupom = $this->coupons->find($id);
 
-        if (!$coupon) {
+        if (!$coupom) {
             return response()->json(['message' => 'Cupom não encontrado.'], 404);
         }
 
-        $coupon->delete();
+        $coupom->delete();
 
         return response()->json(['message' => 'Cupom excluído com êxito.']);
     }

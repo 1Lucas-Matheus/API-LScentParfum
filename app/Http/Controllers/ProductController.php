@@ -2,17 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Categoria;
-use App\Models\Perfume;
+use App\Models\Category;
+use App\Models\Product;
 use Illuminate\Http\Request;
 
-class PerfumeController extends Controller
+class ProductController extends Controller
 {
-    public readonly Perfume $products;
+    public readonly Product $products;
 
     public function __construct()
     {
-        $this->products = new Perfume();
+        $this->products = new Product();
     }
 
     /**
@@ -21,7 +21,7 @@ class PerfumeController extends Controller
     public function index()
     {
         $products = $this->products->all();
-        $categories = Categoria::all();
+        $categories = Category::all();
 
         foreach ($products as $product) {
             $category = $categories->firstWhere('id', $product->category_id);
@@ -29,8 +29,8 @@ class PerfumeController extends Controller
         }
 
         return response()->json([
-            'products' => $products,
-            'categories' => $categories,
+            'dataProducts' => $products,
+            'dataCategories' => $categories,
         ]);
     }
 
@@ -47,7 +47,7 @@ class PerfumeController extends Controller
             'quantity' => ['required', 'integer'],
         ]);
 
-        $product = Perfume::create([
+        $product = Product::create([
             'name' => $request->name,
             'price' => $request->price,
             'category_id' => $request->category_id,
@@ -62,23 +62,9 @@ class PerfumeController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     */
-    public function show($id)
-    {
-        $product = Perfume::find($id);
-
-        if (!$product) {
-            return response()->json(['message' => 'Produto não encontrado.'], 404);
-        }
-
-        return response()->json($product);
-    }
-
-    /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Product $id)
     {
         $request->validate([
             'name' => ['required', 'string', 'max:255', 'unique:products,name,' . $id],
@@ -88,7 +74,7 @@ class PerfumeController extends Controller
             'quantity' => ['required', 'integer'],
         ]);
 
-        $product = Perfume::find($id);
+        $product = Product::find($id);
 
         if (!$product) {
             return response()->json(['message' => 'Produto não encontrado.'], 404);
@@ -111,9 +97,9 @@ class PerfumeController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy($id)
+    public function destroy(Product $id)
     {
-        $product = Perfume::find($id);
+        $product = Product::find($id);
 
         if (!$product) {
             return response()->json(['message' => 'Produto não encontrado.'], 404);
