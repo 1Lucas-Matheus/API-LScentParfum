@@ -51,6 +51,15 @@ class ReminderController extends Controller
         ], 201);
     }
 
+    public function show(Reminder $reminders)
+    {
+        $reminders = $this->reminders->all();
+
+        return response()->json([
+            'data' => $reminders
+        ]);
+    }
+
     /**
      * Update the specified resource in storage.
      */

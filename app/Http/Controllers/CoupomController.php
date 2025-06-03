@@ -48,6 +48,16 @@ class CoupomController extends Controller
         ], 201);
     }
 
+    public function show(Coupom $coupons)
+    {
+        $coupons = $this->coupons->all();
+
+        return response()->json([
+            'success' => true,
+            'data' => $coupons
+        ], 200);
+    }
+
     /**
      * Update the specified resource in storage.
      */

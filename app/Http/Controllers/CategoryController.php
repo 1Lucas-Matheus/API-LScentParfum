@@ -63,6 +63,16 @@ class CategoryController extends Controller
         }
     }
 
+    public function show(Category $categories)
+    {
+        $categories = $this->categories->all();
+
+        return response()->json([
+            'success' => true,
+            'data' => $categories
+        ], 200);
+    }
+
     /**
      * Update the specified resource in storage.
      */

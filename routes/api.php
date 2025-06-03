@@ -12,17 +12,17 @@ use App\Http\Controllers\CountController;
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 
-// Route::middleware('auth:sanctum')->group(function () {
+Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
 
-    Route::apiResource('categorias', CategoryController::class);
-    Route::apiResource('perfumes', ProductController::class);
-    Route::apiResource('cupons', CoupomController::class);
-    Route::apiResource('lembretes', ReminderController::class);
+    Route::apiResource('category', CategoryController::class);
+    Route::apiResource('product', ProductController::class);
+    Route::apiResource('coupom', CoupomController::class);
+    Route::apiResource('reminder', ReminderController::class);
 
-    Route::get('/resumo', [CountController::class, 'contagens']);
+    Route::get('/cont', [CountController::class, 'contagens']);
 
     Route::get('/user', function (Request $request) {
         return response()->json($request->user());
     });
-// });
+});

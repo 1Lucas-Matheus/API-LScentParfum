@@ -61,6 +61,22 @@ class ProductController extends Controller
         ], 201);
     }
 
+    public function show(Product $products)
+    {
+        $products = $this->products->all();
+        $categories = Category::all();
+
+        foreach ($products as $product) {
+            $category = $categories->firstWhere('id', $product->category_id);
+            $product->category = $category ? $category->name : "Sem categoria";
+        }
+
+        return response()->json([
+            'dataProducts' => $products,
+            'dataCategories' => $categories,
+        ]);
+    }
+
     /**
      * Update the specified resource in storage.
      */

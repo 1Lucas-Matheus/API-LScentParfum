@@ -13,10 +13,10 @@ class CountController extends Controller
     public function contagens()
     {
         return response()->json([
-            'categories' => Category::count(),
-            'coupons' => Coupom::count(),
-            'reminders' => Reminder::count(),
-            'products' => Product::count(),
+            'category' => Category::count(),
+            'coupom' => Coupom::count(),
+            'reminder' => Reminder::count(),
+            'product' => Product::count(),
         ]);
     }
 }
