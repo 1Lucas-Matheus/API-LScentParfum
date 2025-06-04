@@ -37,12 +37,12 @@ class ReminderController extends Controller
             'dateTime' => ['required', 'date_format:d/m/Y'],
         ]);
 
-        $dateTimeConvert = Carbon::createFromFormat('d/m/Y', $request->date)->format('d/m/Y');
+        $dateTimeConvert = Carbon::createFromFormat('d/m/Y', $request->dateTime)->format('d/m/Y');
         $request->merge(['dateTime' => $dateTimeConvert]);
 
         $reminder = $this->reminders->create([
             'reminder' => $request->reminder,
-            'dateTime' => $request->date
+            'dateTime' => $request->dateTime
         ]);
 
         return response()->json([
@@ -63,24 +63,19 @@ class ReminderController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Reminder $id)
+    public function update(Request $request, Reminder $reminder)
     {
-        $reminder = $this->reminders->find($id);
-
-        if (!$reminder) {
-            return response()->json(['message' => 'Lembrete não encontrado.'], 404);
-        }
-
         $request->validate([
             'reminder' => ['required', 'string', 'max:255'],
             'dateTime' => ['required', 'date_format:d/m/Y'],
         ]);
 
-        $dateTimeConvert = Carbon::createFromFormat('d/m/Y', trim($request->date))->format('Y-m-d');
+        $dateTimeConvert = Carbon::createFromFormat('d/m/Y', trim($request->dateTime))->format('Y-m-d');
 
-        $request->merge(['dateTime' => $dateTimeConvert]);
-
-        $reminder->update($request->only(['reminder', 'dateTime']));
+        $reminder->update([
+            'reminder' => $request->reminder,
+            'dateTime' => $dateTimeConvert,
+        ]);
 
         return response()->json([
             'message' => 'Lembrete atualizado com êxito.',
@@ -88,10 +83,11 @@ class ReminderController extends Controller
         ]);
     }
 
+
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Reminder $id)
+    public function destroy($id)
     {
         $reminder = $this->reminders->find($id);
 

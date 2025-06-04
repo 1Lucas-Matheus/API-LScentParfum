@@ -80,21 +80,15 @@ class ProductController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Product $id)
+    public function update(Request $request, Product $product)
     {
         $request->validate([
-            'name' => ['required', 'string', 'max:255', 'unique:products,name,' . $id],
+            'name' => ['required', 'string', 'max:255', 'unique:products,name,' . $product->id],
             'category_id' => ['required', 'integer', 'exists:categories,id'],
             'price' => ['required', 'numeric', 'between:0,9999.99'],
             'promo' => ['nullable', 'numeric', 'between:0,100'],
             'quantity' => ['required', 'integer'],
         ]);
-
-        $product = Product::find($id);
-
-        if (!$product) {
-            return response()->json(['message' => 'Produto não encontrado.'], 404);
-        }
 
         $product->update([
             'name' => $request->name,
@@ -110,12 +104,12 @@ class ProductController extends Controller
         ]);
     }
 
+
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Product $id)
+    public function destroy(Product $product)
     {
-        $product = Product::find($id);
 
         if (!$product) {
             return response()->json(['message' => 'Produto não encontrado.'], 404);

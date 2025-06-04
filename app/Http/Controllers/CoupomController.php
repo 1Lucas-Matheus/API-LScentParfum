@@ -61,18 +61,12 @@ class CoupomController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Coupom $id)
+    public function update(Request $request, Coupom $coupom)
     {
         $request->validate([
-            'key' => ['required', 'string', 'size:12', 'unique:coupons,key,' . $id],
+            'key' => ['required', 'string', 'size:12', 'unique:coupons,key,' . $coupom->id],
             'value' => ['required', 'integer', 'min:1', 'max:100'],
         ]);
-
-        $coupom = $this->coupons->find($id);
-
-        if (!$coupom) {
-            return response()->json(['message' => 'Cupom não encontrado.'], 404);
-        }
 
         $coupom->update([
             'key' => $request->key,
@@ -85,10 +79,11 @@ class CoupomController extends Controller
         ]);
     }
 
+
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Coupom $id)
+    public function destroy($id)
     {
         $coupom = $this->coupons->find($id);
 

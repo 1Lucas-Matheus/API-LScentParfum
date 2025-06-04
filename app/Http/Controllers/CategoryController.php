@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\Product;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
@@ -76,14 +77,14 @@ class CategoryController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Category $id)
+    public function update(Request $request, Category $category)
     {
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
         ]);
 
         $categoriaExistente = Category::where('name', $request->name)
-            ->where('id', '!=', $id->id)
+            ->where('id', '!=', $category->id)
             ->exists();
 
         if ($categoriaExistente) {
@@ -93,8 +94,8 @@ class CategoryController extends Controller
             ], 400);
         }
 
-        $id->name = $request->name;
-        $updated = $id->save();
+        $category->name = $request->name;
+        $updated = $category->save();
 
         if ($updated) {
             return response()->json([
@@ -112,29 +113,21 @@ class CategoryController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Category $id)
+    public function destroy(Category $category)
     {
-        $id = $this->categories->find($id);
+        // Verifica se existem produtos que usam essa categoria
+        $hasProducts = Product::where('category_id', $category->id)->exists();
 
-        if (!$id) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Categoria não encontrada.'
-            ], 404);
-        }
-
-        $Products = Category::where('category_id', $id)->exists();
-
-        if ($Products) {
+        if ($hasProducts) {
             return response()->json([
                 'success' => false,
                 'message' => 'Não é possível excluir essa categoria. Existem produtos associados a ela.'
             ], 400);
         }
 
-        $destroy = $id->delete();
+        $deleted = $category->delete();
 
-        if ($destroy) {
+        if ($deleted) {
             return response()->json([
                 'success' => true,
                 'message' => 'Categoria excluída com êxito.'
