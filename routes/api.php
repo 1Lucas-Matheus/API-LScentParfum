@@ -10,7 +10,9 @@ use App\Http\Controllers\ReminderController;
 use App\Http\Controllers\CountController;
 
 Route::post('/register', [AuthController::class, 'register']);
-Route::post('/login', [AuthController::class, 'login']);
+Route::post('/login', [AuthController::class, 'loginro']);
+
+Route::get('/cont', [CountController::class, 'contagens']);
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
@@ -20,7 +22,6 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('coupom', CoupomController::class);
     Route::apiResource('reminder', ReminderController::class);
 
-    Route::get('/cont', [CountController::class, 'contagens']);
 
     Route::get('/user', function (Request $request) {
         return response()->json($request->user());
