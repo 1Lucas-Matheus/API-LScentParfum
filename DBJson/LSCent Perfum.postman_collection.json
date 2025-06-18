@@ -1,0 +1,422 @@
+{
+	"info": {
+		"_postman_id": "0c517a46-dc98-46d8-a888-03ad1d327185",
+		"name": "LSCent Perfum",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "43761099",
+		"_collection_link": "https://elivan-7054393.postman.co/workspace/Elivan's-Workspace~7ea3696e-988a-4674-8172-122482cd7108/collection/43761099-0c517a46-dc98-46d8-a888-03ad1d327185?action=share&source=collection_link&creator=43761099"
+	},
+	"item": [
+		{
+			"name": "Login",
+			"item": [
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "https://mainly-awake-minnow.ngrok-free.app/api/login",
+							"protocol": "https",
+							"host": [
+								"mainly-awake-minnow",
+								"ngrok-free",
+								"app"
+							],
+							"path": [
+								"api",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Registro",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "https://mainly-awake-minnow.ngrok-free.app/api/register",
+							"protocol": "https",
+							"host": [
+								"mainly-awake-minnow",
+								"ngrok-free",
+								"app"
+							],
+							"path": [
+								"api",
+								"register"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Produto",
+			"item": [
+				{
+					"name": "ProdutoCreate",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "https://mainly-awake-minnow.ngrok-free.app/api/perfumes",
+							"protocol": "https",
+							"host": [
+								"mainly-awake-minnow",
+								"ngrok-free",
+								"app"
+							],
+							"path": [
+								"api",
+								"perfumes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ProdutoRead",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://mainly-awake-minnow.ngrok-free.app/api/perfumes",
+							"protocol": "https",
+							"host": [
+								"mainly-awake-minnow",
+								"ngrok-free",
+								"app"
+							],
+							"path": [
+								"api",
+								"perfumes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ProdutoUpdate",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "https://mainly-awake-minnow.ngrok-free.app/api/perfumes/1",
+							"protocol": "https",
+							"host": [
+								"mainly-awake-minnow",
+								"ngrok-free",
+								"app"
+							],
+							"path": [
+								"api",
+								"perfumes",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ProdutoDelete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "https://mainly-awake-minnow.ngrok-free.app/api/perfumes/1",
+							"protocol": "https",
+							"host": [
+								"mainly-awake-minnow",
+								"ngrok-free",
+								"app"
+							],
+							"path": [
+								"api",
+								"perfumes",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Categoria",
+			"item": [
+				{
+					"name": "CategoriaCreate",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "https://mainly-awake-minnow.ngrok-free.app/api/categorias",
+							"protocol": "https",
+							"host": [
+								"mainly-awake-minnow",
+								"ngrok-free",
+								"app"
+							],
+							"path": [
+								"api",
+								"categorias"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CategoriaRead",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://mainly-awake-minnow.ngrok-free.app/api/categorias",
+							"protocol": "https",
+							"host": [
+								"mainly-awake-minnow",
+								"ngrok-free",
+								"app"
+							],
+							"path": [
+								"api",
+								"categorias"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CategoriaUpdate",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "https://mainly-awake-minnow.ngrok-free.app/api/categorias/1",
+							"protocol": "https",
+							"host": [
+								"mainly-awake-minnow",
+								"ngrok-free",
+								"app"
+							],
+							"path": [
+								"api",
+								"categorias",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CategoriaDelete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "https://mainly-awake-minnow.ngrok-free.app/api/categorias/1",
+							"protocol": "https",
+							"host": [
+								"mainly-awake-minnow",
+								"ngrok-free",
+								"app"
+							],
+							"path": [
+								"api",
+								"categorias",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Cupom",
+			"item": [
+				{
+					"name": "CupomCreate",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "https://mainly-awake-minnow.ngrok-free.app/api/cupons",
+							"protocol": "https",
+							"host": [
+								"mainly-awake-minnow",
+								"ngrok-free",
+								"app"
+							],
+							"path": [
+								"api",
+								"cupons"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CupomRead",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://mainly-awake-minnow.ngrok-free.app/api/cupons",
+							"protocol": "https",
+							"host": [
+								"mainly-awake-minnow",
+								"ngrok-free",
+								"app"
+							],
+							"path": [
+								"api",
+								"cupons"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CupomUpdate",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "https://mainly-awake-minnow.ngrok-free.app/api/cupons/1",
+							"protocol": "https",
+							"host": [
+								"mainly-awake-minnow",
+								"ngrok-free",
+								"app"
+							],
+							"path": [
+								"api",
+								"cupons",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CupomDelete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "https://mainly-awake-minnow.ngrok-free.app/api/cupons/1",
+							"protocol": "https",
+							"host": [
+								"mainly-awake-minnow",
+								"ngrok-free",
+								"app"
+							],
+							"path": [
+								"api",
+								"cupons",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Lembrete",
+			"item": [
+				{
+					"name": "LembreteCreate",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "https://mainly-awake-minnow.ngrok-free.app/api/lembretes",
+							"protocol": "https",
+							"host": [
+								"mainly-awake-minnow",
+								"ngrok-free",
+								"app"
+							],
+							"path": [
+								"api",
+								"lembretes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "LembreteRead",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://mainly-awake-minnow.ngrok-free.app/api/lembretes",
+							"protocol": "https",
+							"host": [
+								"mainly-awake-minnow",
+								"ngrok-free",
+								"app"
+							],
+							"path": [
+								"api",
+								"lembretes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "LembreteUpdate",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "https://mainly-awake-minnow.ngrok-free.app/api/lembretes/1",
+							"protocol": "https",
+							"host": [
+								"mainly-awake-minnow",
+								"ngrok-free",
+								"app"
+							],
+							"path": [
+								"api",
+								"lembretes",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "LembreteDelete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "https://mainly-awake-minnow.ngrok-free.app/api/lembretes/1",
+							"protocol": "https",
+							"host": [
+								"mainly-awake-minnow",
+								"ngrok-free",
+								"app"
+							],
+							"path": [
+								"api",
+								"lembretes",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

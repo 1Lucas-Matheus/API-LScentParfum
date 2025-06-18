@@ -10,7 +10,7 @@ use App\Http\Controllers\ReminderController;
 use App\Http\Controllers\CountController;
 
 Route::post('/register', [AuthController::class, 'register']);
-Route::post('/login', [AuthController::class, 'loginro']);
+Route::post('/login', [AuthController::class, 'login']);
 
 Route::get('/cont', [CountController::class, 'contagens']);
 
