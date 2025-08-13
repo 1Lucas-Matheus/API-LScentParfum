@@ -14,7 +14,7 @@ Route::post('/login', [AuthController::class, 'login']);
 
 Route::get('/cont', [CountController::class, 'contagens']);
 
-Route::middleware('auth:sanctum')->group(function () {
+// Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
 
     Route::apiResource('category', CategoryController::class);
@@ -26,4 +26,4 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/user', function (Request $request) {
         return response()->json($request->user());
     });
-});
+// });
